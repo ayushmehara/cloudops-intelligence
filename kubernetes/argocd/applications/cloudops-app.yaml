@@ -3,62 +3,73 @@ kind: Application
 metadata:
   name: cloudops-intelligence
   namespace: argocd
+
 spec:
+  project: default
+
   # Git source of truth
   source:
     repoURL: https://github.com/ayushmehara/cloudops-intelligence.git
     targetRevision: main
-    path: kubernetes/argocd/applications
-  
+    path: kubernetes/manifests
+
   # Deployment target
   destination:
     server: https://kubernetes.default.svc
     namespace: production
-  
+
   # Sync strategy
   syncPolicy:
     automated:
-      prune: true        # Delete resources not in git
-      selfHeal: true     # Automatically fix drift
-      allowEmpty: false  # Prevent accidental deletion of all
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
+
     retry:
       limit: 5
       backoff:
         duration: 5s
         factor: 2
         maxDuration: 3m
-  
-  # Notifications
+
+  # Ignore replica drift
   ignoreDifferences:
-  - group: apps
-    kind: Deployment
-    jsonPointers:
-    - /spec/replicas
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
 
 ---
-# ArgoCD Application for monitoring stack
+
+# ArgoCD Application for Monitoring Stack
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: cloudops-monitoring
   namespace: argocd
+
 spec:
+  project: default
+
   source:
     repoURL: https://github.com/ayushmehara/cloudops-intelligence.git
     targetRevision: main
     path: kubernetes/monitoring
-  
+
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
-  
+
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
+
     retry:
       limit: 5
