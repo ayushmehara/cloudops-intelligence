@@ -6,7 +6,7 @@ metadata:
 spec:
   # Git source of truth
   source:
-    repoURL: https://github.com/YOUR_USERNAME/cloudops-intelligence.git
+    repoURL: https://github.com/ayushmehara/cloudops-intelligence.git
     targetRevision: main
     path: kubernetes/argocd/applications
   
@@ -46,7 +46,7 @@ metadata:
   namespace: argocd
 spec:
   source:
-    repoURL: https://github.com/YOUR_USERNAME/cloudops-intelligence.git
+    repoURL: https://github.com/ayushmehara/cloudops-intelligence.git
     targetRevision: main
     path: kubernetes/monitoring
   
