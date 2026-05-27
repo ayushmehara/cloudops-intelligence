@@ -1,0 +1,51 @@
+---
+# Production namespace for application workloads
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+  labels:
+    name: production
+    tier: application
+    cost-center: platform
+  annotations:
+    description: "Production application workloads"
+
+---
+# Monitoring namespace for observability stack
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+  labels:
+    name: monitoring
+    tier: observability
+    cost-center: platform
+  annotations:
+    description: "Prometheus, Grafana, Loki, Tempo"
+
+---
+# GitOps namespace for ArgoCD
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gitops
+  labels:
+    name: gitops
+    tier: platform
+    cost-center: platform
+  annotations:
+    description: "ArgoCD continuous deployment"
+
+---
+# AI Engine namespace for LLM services
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai
+  labels:
+    name: ai
+    tier: platform
+    cost-center: platform
+  annotations:
+    description: "AI analysis engine, LLM integration"

@@ -1,0 +1,113 @@
+/* ============ LAYOUT ============ */
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #0f1419;
+    color: #e0e0e0;
+}
+
+.api-warning {
+    background: #d32f2f;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.app-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 24px;
+}
+
+/* ============ COMPONENTS ============ */
+
+.card {
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    border-color: #555;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.button-primary {
+    background: #1976d2;
+    color: white;
+}
+
+.button-primary:hover {
+    background: #1565c0;
+}
+
+.button-secondary {
+    background: #424242;
+    color: white;
+}
+
+.button-secondary:hover {
+    background: #616161;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-success {
+    background: #4caf50;
+    color: white;
+}
+
+.badge-error {
+    background: #f44336;
+    color: white;
+}
+
+.badge-warning {
+    background: #ff9800;
+    color: white;
+}
+
+.badge-info {
+    background: #2196f3;
+    color: white;
+}
+
+/* ============ RESPONSIVE ============ */
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 12px;
+    }
+    
+    .app-container {
+        flex-direction: column;
+    }
+}

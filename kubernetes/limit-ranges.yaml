@@ -1,0 +1,125 @@
+---
+# Production namespace limit range (FIXED)
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: production-limits
+  namespace: production
+spec:
+  limits:
+    # Per container limits (where default/defaultRequest work)
+    - type: Container
+      max:
+        cpu: "1"
+        memory: "512Mi"
+      min:
+        cpu: "50m"
+        memory: "64Mi"
+      default:
+        cpu: "256m"
+        memory: "256Mi"
+      defaultRequest:
+        cpu: "100m"
+        memory: "128Mi"
+    
+    # Pod max/min (no default/defaultRequest)
+    - type: Pod
+      max:
+        cpu: "2"
+        memory: "1Gi"
+      min:
+        cpu: "50m"
+        memory: "64Mi"
+
+---
+# Monitoring namespace limit range (FIXED)
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: monitoring-limits
+  namespace: monitoring
+spec:
+  limits:
+    - type: Container
+      max:
+        cpu: "2"
+        memory: "1Gi"
+      min:
+        cpu: "100m"
+        memory: "128Mi"
+      default:
+        cpu: "512m"
+        memory: "512Mi"
+      defaultRequest:
+        cpu: "250m"
+        memory: "256Mi"
+    
+    - type: Pod
+      max:
+        cpu: "4"
+        memory: "2Gi"
+      min:
+        cpu: "100m"
+        memory: "128Mi"
+
+---
+# GitOps namespace limit range (FIXED)
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: gitops-limits
+  namespace: gitops
+spec:
+  limits:
+    - type: Container
+      max:
+        cpu: "1"
+        memory: "512Mi"
+      min:
+        cpu: "50m"
+        memory: "64Mi"
+      default:
+        cpu: "256m"
+        memory: "256Mi"
+      defaultRequest:
+        cpu: "100m"
+        memory: "128Mi"
+    
+    - type: Pod
+      max:
+        cpu: "2"
+        memory: "1Gi"
+      min:
+        cpu: "50m"
+        memory: "64Mi"
+
+---
+# AI namespace limit range (FIXED)
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: ai-limits
+  namespace: ai
+spec:
+  limits:
+    - type: Container
+      max:
+        cpu: "2"
+        memory: "1Gi"
+      min:
+        cpu: "100m"
+        memory: "128Mi"
+      default:
+        cpu: "512m"
+        memory: "512Mi"
+      defaultRequest:
+        cpu: "250m"
+        memory: "256Mi"
+    
+    - type: Pod
+      max:
+        cpu: "4"
+        memory: "2Gi"
+      min:
+        cpu: "100m"
+        memory: "128Mi"

@@ -1,0 +1,64 @@
+---
+# Production namespace resource quota
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: production-quota
+  namespace: production
+spec:
+  hard:
+    requests.cpu: "2"              # Max 2 CPU cores
+    requests.memory: "4Gi"          # Max 4GB RAM
+    limits.cpu: "3"                 # Max 3 CPU cores burst
+    limits.memory: "5Gi"            # Max 5GB RAM burst
+    pods: "20"                      # Max 20 pods
+    services: "10"                  # Max 10 services
+    persistentvolumeclaims: "3"     # Max 3 persistent volumes
+
+---
+# Monitoring namespace resource quota
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: monitoring-quota
+  namespace: monitoring
+spec:
+  hard:
+    requests.cpu: "1"
+    requests.memory: "2Gi"
+    limits.cpu: "2"
+    limits.memory: "3Gi"
+    pods: "15"
+    services: "10"
+
+---
+# GitOps namespace resource quota
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: gitops-quota
+  namespace: gitops
+spec:
+  hard:
+    requests.cpu: "0.5"
+    requests.memory: "1Gi"
+    limits.cpu: "1"
+    limits.memory: "2Gi"
+    pods: "10"
+    services: "5"
+
+---
+# AI namespace resource quota
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: ai-quota
+  namespace: ai
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: "2Gi"
+    limits.cpu: "3"
+    limits.memory: "4Gi"
+    pods: "10"
+    services: "5"

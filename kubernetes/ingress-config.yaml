@@ -1,0 +1,41 @@
+---
+# Traefik service - use LoadBalancer to expose on 80/443
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-lb
+  namespace: kube-system
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: traefik
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8000
+      protocol: TCP
+    - name: websecure
+      port: 443
+      targetPort: 8443
+      protocol: TCP
+
+---
+# Traefik service for internal cluster access (ClusterIP)
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: traefik
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8000
+      protocol: TCP
+    - name: websecure
+      port: 443
+      targetPort: 8443
+      protocol: TCP
