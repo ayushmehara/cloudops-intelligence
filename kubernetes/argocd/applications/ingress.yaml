@@ -1,0 +1,74 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cloudops-ingress
+  namespace: production
+  annotations:
+    # Use Traefik ingress controller
+    kubernetes.io/ingress.class: traefik
+    # Redirect HTTP to HTTPS
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # Enable security headers middleware
+    traefik.ingress.kubernetes.io/router.middlewares: kube-system-security-headers,kube-system-rate-limit
+spec:
+  rules:
+  # Frontend route
+  - host: cloudops.3.24.212.95.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 3000
+  
+  # Backend API route
+  - host: api.cloudops.3.24.212.95.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8000
+  
+  # Self-signed cert (for testing, use real cert in production)
+  tls:
+  - hosts:
+    - cloudops.3.24.212.95.com
+    - api.cloudops.3.24.212.95.com
+    secretName: cloudops-tls
+
+---
+# Self-signed certificate (for testing only!)
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cloudops-cert
+  namespace: production
+spec:
+  secretName: cloudops-tls
+  duration: 2160h # 90 days
+  renewBefore: 720h # 30 days
+  commonName: cloudops.3.24.212.95.com
+  dnsNames:
+  - cloudops.3.24.212.95.com
+  - api.cloudops.3.24.212.95.com
+  issuerRef:
+    name: selfsigned-issuer
+    kind: Issuer
+
+---
+# Self-signed issuer (for testing only!)
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned-issuer
+  namespace: production
+spec:
+  selfSigned: {}
