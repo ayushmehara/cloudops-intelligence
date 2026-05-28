@@ -4,10 +4,9 @@ metadata:
   name: cloudops-ingress
   namespace: production
 spec:
+  ingressClassName: traefik
   rules:
-  # Frontend on root path
-  - host: "*"
-    http:
+  - http:
       paths:
       - path: /
         pathType: Prefix
@@ -16,7 +15,6 @@ spec:
             name: frontend
             port:
               number: 3000
-      # Backend API on /api path
       - path: /api
         pathType: Prefix
         backend:
